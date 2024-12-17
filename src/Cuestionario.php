@@ -27,7 +27,7 @@ class Cuestionario
 
     public function generarFormularioPreguntas($preguntas)
     {
-        $html = "<form method='POST' action='guardar_resultados.php?id=" . htmlspecialchars($this->usuarioId) . "' class='cuestionario'>";
+        echo "<form method='POST' action='guardar_resultados.php?id=" . htmlspecialchars($this->usuarioId) . "' class='cuestionario'>";
 
         foreach ($preguntas as $pregunta) {
            echo "<div class='pregunta'>";
