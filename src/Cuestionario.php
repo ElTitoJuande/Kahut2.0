@@ -42,6 +42,5 @@ class Cuestionario
         echo "<input type='submit' value='Enviar'>";
         echo "</form>";
 
-        return $html;
     }
 }
