@@ -30,17 +30,17 @@ class Cuestionario
         $html = "<form method='POST' action='guardar_resultados.php?id=" . htmlspecialchars($this->usuarioId) . "' class='cuestionario'>";
 
         foreach ($preguntas as $pregunta) {
-            $html .= "<div class='pregunta'>";
-            $html .= "<p>" . htmlspecialchars($pregunta['enunciado']) . "</p>";
-            $html .= "<label><input type='radio' name='respuesta_" . htmlspecialchars($pregunta['cod']) . "' value='A' required> " . htmlspecialchars($pregunta['opcion_a']) . "</label><br>";
-            $html .= "<label><input type='radio' name='respuesta_" . htmlspecialchars($pregunta['cod']) . "' value='B'> " . htmlspecialchars($pregunta['opcion_b']) . "</label><br>";
-            $html .= "<label><input type='radio' name='respuesta_" . htmlspecialchars($pregunta['cod']) . "' value='C'> " . htmlspecialchars($pregunta['opcion_c']) . "</label><br>";
-            $html .= "<label><input type='radio' name='respuesta_" . htmlspecialchars($pregunta['cod']) . "' value='D'> " . htmlspecialchars($pregunta['opcion_d']) . "</label><br>";
-            $html .= "</div><hr>";
+           echo "<div class='pregunta'>";
+           echo "<p>" . htmlspecialchars($pregunta['enunciado']) . "</p>";
+           echo "<label><input type='radio' name='respuesta_" . htmlspecialchars($pregunta['cod']) . "' value='A' required> " . htmlspecialchars($pregunta['opcion_a']) . "</label><br>";
+           echo "<label><input type='radio' name='respuesta_" . htmlspecialchars($pregunta['cod']) . "' value='B'> " . htmlspecialchars($pregunta['opcion_b']) . "</label><br>";
+           echo "<label><input type='radio' name='respuesta_" . htmlspecialchars($pregunta['cod']) . "' value='C'> " . htmlspecialchars($pregunta['opcion_c']) . "</label><br>";
+           echo "<label><input type='radio' name='respuesta_" . htmlspecialchars($pregunta['cod']) . "' value='D'> " . htmlspecialchars($pregunta['opcion_d']) . "</label><br>";
+           echo "</div><hr>";
         }
 
-        $html .= "<input type='submit' value='Enviar'>";
-        $html .= "</form>";
+        echo "<input type='submit' value='Enviar'>";
+        echo "</form>";
 
         return $html;
     }
