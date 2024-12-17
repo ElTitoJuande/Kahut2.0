@@ -27,20 +27,19 @@ class Ranking
 
     public function generarTablaRanking($jugadores)
     {
-        $html = "<table class='ranking'>";
-        $html .= "<tr><th>Posición</th><th>Nombre</th><th>Puntaje</th><th>Tiempo</th></tr>";
+        echo "<table class='ranking'>";
+        echo "<tr><th>Posición</th><th>Nombre</th><th>Puntaje</th><th>Tiempo</th></tr>";
 
         foreach ($jugadores as $index => $jugador) {
-            $html .= "<tr>";
-            $html .= "<td>" . ($index + 1) . "</td>";
-            $html .= "<td>" . htmlspecialchars($jugador['nombreUsu']) . "</td>";
-            $html .= "<td>" . htmlspecialchars($jugador['puntaje']) . "/5</td>";
-            $html .= "<td>" . htmlspecialchars($jugador['tiempo_total']) . " seg</td>";
-            $html .= "</tr>";
+            echo "<tr>";
+            echo "<td>" . ($index + 1) . "</td>";
+            echo "<td>" . htmlspecialchars($jugador['nombreUsu']) . "</td>";
+            echo "<td>" . htmlspecialchars($jugador['puntaje']) . "/5</td>";
+            echo "<td>" . htmlspecialchars($jugador['tiempo_total']) . " seg</td>";
+            echo "</tr>";
         }
 
-        $html .= "</table>";
-        return $html;
+        echo "</table>";
     }
 }
     
