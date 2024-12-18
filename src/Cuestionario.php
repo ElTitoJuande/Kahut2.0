@@ -10,37 +10,36 @@ class Cuestionario
         $this->usuarioId = $usuarioId;
     }
 
-    public function obtenerPreguntasAleatorias($cantidad = 5, $categoria = null)
+    // Obtengo una pregunta aleatoria que no se ha respondido
+    public function obtenerPreguntaAleatoria($preguntasRespondidas = [])
     {
         try {
-            $sql = "SELECT * FROM preguntas ORDER BY RAND() LIMIT :cantidad";
+            // Excluiye preguntas ya respondidas
+            $whereClause = $preguntasRespondidas ?
+                "WHERE cod NOT IN (" . implode(',', $preguntasRespondidas) . ") " :
+                "";
 
-            $stmt = $this->db->prepare($sql);
-            $stmt->bindParam(':cantidad', $cantidad, PDO::PARAM_INT);
+            $sql = "SELECT * FROM preguntas {$whereClause} ORDER BY RAND() LIMIT 1";
 
-            $stmt->execute();
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $stmt = $this->db->query($sql);
+            return $stmt->fetch(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
-            throw new Exception("Error al obtener preguntas: " . $e->getMessage());
+            throw new Exception("Error al obtener pregunta: " . $e->getMessage());
         }
     }
-
-    public function generarFormularioPreguntas($preguntas)
+    // HTML del formulario
+    public function generarFormularioPregunta($pregunta)
     {
-        echo "<form method='POST' action='guardar_resultados.php?id=" . htmlspecialchars($this->usuarioId) . "' class='cuestionario'>";
-
-        foreach ($preguntas as $pregunta) {
-           echo "<div class='pregunta'>";
-           echo "<p>" . htmlspecialchars($pregunta['enunciado']) . "</p>";
-           echo "<label><input type='radio' name='respuesta_" . htmlspecialchars($pregunta['cod']) . "' value='A' required> " . htmlspecialchars($pregunta['opcion_a']) . "</label><br>";
-           echo "<label><input type='radio' name='respuesta_" . htmlspecialchars($pregunta['cod']) . "' value='B'> " . htmlspecialchars($pregunta['opcion_b']) . "</label><br>";
-           echo "<label><input type='radio' name='respuesta_" . htmlspecialchars($pregunta['cod']) . "' value='C'> " . htmlspecialchars($pregunta['opcion_c']) . "</label><br>";
-           echo "<label><input type='radio' name='respuesta_" . htmlspecialchars($pregunta['cod']) . "' value='D'> " . htmlspecialchars($pregunta['opcion_d']) . "</label><br>";
-           echo "</div><hr>";
-        }
-
-        echo "<input type='submit' value='Enviar'>";
+        echo "<form method='POST' action='verificar_pregunta.php?id=" . htmlspecialchars($this->usuarioId) . "' class='cuestionario'>";
+        echo "<input type='hidden' name='cod_pregunta' value='" . htmlspecialchars($pregunta['cod']) . "'>";
+        echo "<div class='pregunta'>";
+        echo "<p>" . htmlspecialchars($pregunta['enunciado']) . "</p>";
+        echo "<label><input type='radio' name='respuesta' value='A' required> " . htmlspecialchars($pregunta['opcion_a']) . "</label><br>";
+        echo "<label><input type='radio' name='respuesta' value='B'> " . htmlspecialchars($pregunta['opcion_b']) . "</label><br>";
+        echo "<label><input type='radio' name='respuesta' value='C'> " . htmlspecialchars($pregunta['opcion_c']) . "</label><br>";
+        echo "<label><input type='radio' name='respuesta' value='D'> " . htmlspecialchars($pregunta['opcion_d']) . "</label><br>";
+        echo "</div>";
+        echo "<input type='submit' value='Responder'>";
         echo "</form>";
-
     }
 }

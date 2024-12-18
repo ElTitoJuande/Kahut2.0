@@ -11,7 +11,7 @@ class Usuario
     {
         $this->db = $db->getConnection();
     }
-
+    //Registro nombre + fecha y hora
     public function registrar($nombreUsu)
     {
         try {
@@ -28,7 +28,7 @@ class Usuario
             throw new Exception("Error en registro: " . $e->getMessage());
         }
     }
-
+    //formato del nombre
     public static function validarNombre($nombre)
     {
         $nombre = trim($nombre);
